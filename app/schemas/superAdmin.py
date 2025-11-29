@@ -1,22 +1,22 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
-class SuperAdminCreate(BaseModel):
+class SuperAdminBase(BaseModel):
+    email: EmailStr
+    fullName: str
+
+class SuperAdminLogin(BaseModel):
     email: EmailStr
     password: str
-    profileImageURL: Optional[str] = None
-    fullName: str
-    role: str = "super_admin"
 
-class SuperAdminResponse(BaseModel):
+class SuperAdminResponse(SuperAdminBase):
     id: str
-    email: EmailStr
-    profileImageURL: Optional[str] = None
+    profileImageURL: str | None = None
+    role: str = "super_admin"
     createdAt: datetime
-    fullName: str
-    lastLogin: Optional[datetime] = None
-    role: str
+    lastLogin: Optional[datetime]= None
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
