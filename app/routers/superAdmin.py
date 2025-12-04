@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from app.schemas.superAdmin import SuperAdminLogin, SuperAdminResponse
-from app.crud.superAdmin import login_super_admin
+from app.schemas.super_admin import SuperAdminLogin, SuperAdminResponse
+from app.crud.super_admin import login_super_admin
 
 router = APIRouter(prefix="/super-admin", tags=["Super Admin"])
 

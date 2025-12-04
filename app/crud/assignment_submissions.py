@@ -1,5 +1,5 @@
 from app.db.database import db
-from app.schemas.assignmentSubmissions import AssignmentSubmissionCreate
+from app.schemas.assignment_submissions import AssignmentSubmissionCreate
 from datetime import datetime
 from bson import ObjectId
 from typing import List, Optional

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from bson import ObjectId
-from app.schemas.assignmentSubmissions import AssignmentSubmissionCreate, AssignmentSubmissionResponse
+from app.schemas.assignment_submissions import AssignmentSubmissionCreate, AssignmentSubmissionResponse
 from app.crud.assignment_submissions import (
     create_submission,
     get_all_submissions,

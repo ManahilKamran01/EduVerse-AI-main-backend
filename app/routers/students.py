@@ -5,7 +5,7 @@ from app.schemas.student import (
     StudentUpdate,
     StudentResponse,
 )
-from app.crud import student as crud_student
+from app.crud import students as crud_student
 
 router = APIRouter(prefix="/students", tags=["Students"])
 
