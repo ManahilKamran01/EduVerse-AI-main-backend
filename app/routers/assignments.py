@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from fastapi import APIRouter, HTTPException
 from bson import ObjectId
@@ -10,10 +11,9 @@ from app.schemas.assignments import (
 from app.crud.assignments import (
     create_assignment,
     get_all_assignments,
-    get_all_assignments_by_tenant,
+   
     get_assignment,
-    get_assignments_by_teacher,
-    get_assignments_by_course,
+   
     update_assignment,
     delete_assignment
 )
@@ -51,35 +51,64 @@ async def create_assignment_route(data: AssignmentCreate):
     return assignment
 
 
-@router.get("/", response_model=list[AssignmentResponse])
-async def get_all_assignments_route():
-    return await get_all_assignments()
+# @router.get("/", response_model=list[AssignmentResponse])
+# async def get_all_assignments_route():
+#     return await get_all_assignments()
+
+
+@router.get("/", response_model=dict)
+async def get_all_assignments_route(
+    search: str = None,
+    tenantId: str = None,
+    teacherId: str = None,
+    courseId: str = None,
+    status: str = None,
+    fromDate: datetime = None,
+    toDate: datetime = None,
+    sortBy: str = "uploadedAt",
+    order: int = -1,
+    page: int = 1,
+    limit: int = 10,
+):
+    return await get_all_assignments(
+        search,
+        tenantId,
+        teacherId,
+        courseId,
+        status,
+        fromDate,
+        toDate,
+        sortBy,
+        order,
+        page,
+        limit
+    )
 
 
 
-@router.get("/tenant/{tenantId}", response_model=list[AssignmentResponse])
-async def get_all_by_tenant(tenantId: str):
+# @router.get("/tenant/{tenantId}", response_model=list[AssignmentResponse])
+# async def get_all_by_tenant(tenantId: str):
 
-    validate_object_id(tenantId, "tenantId")
+#     validate_object_id(tenantId, "tenantId")
 
-    return await get_all_assignments_by_tenant(tenantId)
-
-
-
-@router.get("/teacher/{teacherId}", response_model=list[AssignmentResponse])
-async def get_by_teacher(teacherId: str):
-
-    validate_object_id(teacherId, "teacherId")
-
-    return await get_assignments_by_teacher(teacherId)
+#     return await get_all_assignments_by_tenant(tenantId)
 
 
-@router.get("/course/{courseId}", response_model=list[AssignmentResponse])
-async def get_by_course(courseId: str):
 
-    validate_object_id(courseId, "courseId")
+# @router.get("/teacher/{teacherId}", response_model=list[AssignmentResponse])
+# async def get_by_teacher(teacherId: str):
 
-    return await get_assignments_by_course(courseId)
+#     validate_object_id(teacherId, "teacherId")
+
+#     return await get_assignments_by_teacher(teacherId)
+
+
+# @router.get("/course/{courseId}", response_model=list[AssignmentResponse])
+# async def get_by_course(courseId: str):
+
+#     validate_object_id(courseId, "courseId")
+
+#     return await get_assignments_by_course(courseId)
 
 
 @router.get("/{id}", response_model=AssignmentResponse)
